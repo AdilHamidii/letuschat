@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Language Selection</title>
+</head>
+<body>
+    <h1>Welcome to Letuschat.fr</h1>
+    <p>So many friendships can't start because of the language barrier, for some reason big social media apps never implemented such an idea. So I decided to do it myself!</p>
+    <p><strong>This is how it works:</strong></p>
+    <ul>
+        <li>Choose your language of choice</li>
+        <li>Share the chat link with the other person</li>
+        <li>They'll have to choose their preferred language</li>
+    </ul>
+    <p><strong>Everything will be translated in between!</strong></p>
+    <p>Keep in mind: Chats are not encrypted (I don't know how to do that yet).</p>
+    <p>Don't use abbreviations that might confuse the translation API.</p>
+    <p>====> For any questions contact me on discord : adylfr </p>
+
+    <label for="language">Select Your Language:</label>
+    <select id="language">
+        <option value="en">English</option>
+        <!-- Add more languages as needed -->
+    </select>
+
+    <button id="generate">Generate Chat Link</button>
+    <p id="link"></p>
+
+    <div id="message" style="display: none; color: green;">
+        <strong>Link generated successfully! Share it with your friend.</strong>
+    </div>
+
+    <div id="error" style="display: none; color: red;">
+        <strong>Error generating chat link. Please try again.</strong>
+    </div>
+
+    <script>
+        document.getElementById('generate').addEventListener('click', async () => {
+            try {
+                const language = document.getElementById('language').value;
+                const response = await fetch('/generate');
+                
+                if (!response.ok) {
+                    throw new Error('Failed to generate chat link');
+                }
+
+                const data = await response.json();
+                const link = `${window.location.origin}${data.link}?lang=${language}`;
+
+                document.getElementById('link').textContent = `Share this link: ${link}`;
+                document.getElementById('message').style.display = 'block'; // Show success message
+                document.getElementById('error').style.display = 'none';   // Hide error message
+            } catch (error) {
+                document.getElementById('error').style.display = 'block';  // Show error message
+                document.getElementById('message').style.display = 'none'; // Hide success message
+            }
+        });
+    </script>
+</body>
+</html>
