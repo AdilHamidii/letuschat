@@ -8,7 +8,7 @@ const axios = require('axios');
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
-
+console.log("DeepL API Key: ", process.env.NOAPIKEYFORYOU);
 
 app.use(express.static('public'));
 
