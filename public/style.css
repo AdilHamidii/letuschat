@@ -6,14 +6,17 @@
 
 body {
     font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    height: 100vh;
-    width: 100vw;
-    overflow: hidden; /* Prevents scrollbars */
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
     background-color: #808080;
+    -webkit-font-smoothing: antialiased; /* Ensure text rendering is smooth in Safari */
 }
 
 h1 {
@@ -21,22 +24,24 @@ h1 {
 }
 
 #chat-container {
-    width: 100vw;
-    height: 100%; /* Take full height of the screen */
     display: flex;
     flex-direction: column;
     border: 1px solid #ccc;
     border-radius: 5px;
     background: white;
-    position: relative; /* Make sure chat container is positioned correctly */
+    width: 100%; /* Ensure it takes the full width of the viewport */
+    height: calc(100vh - 40px); /* Adjust to avoid issues with the iPhone's address bar */
+    max-height: 100%;
+    overflow: hidden; /* Prevent overflow in case of any unexpected content */
 }
 
 #chat {
-    flex-grow: 1; /* Take up remaining space */
+    flex: 1;
     padding: 10px;
-    overflow-y: auto; /* Make the chat area scrollable */
+    overflow-y: auto;
     background-color: #f9f9f9;
-    padding-bottom: 70px; /* Adjust space for the input container */
+    flex-grow: 1;
+    -webkit-overflow-scrolling: touch; /* Ensure smooth scrolling in Safari */
 }
 
 .message {
@@ -57,26 +62,19 @@ h1 {
 }
 
 #input-container {
-    position: fixed; /* Keep it at the bottom */
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    padding: 10px;
-    background: #f4f4f4;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    box-sizing: border-box;
-    z-index: 10; /* Ensure input container stays above chat */
+    padding: 10px;
+    border-top: 1px solid #ccc;
+    background: #f4f4f4;
 }
 
 #message {
-    flex-grow: 1;
+    flex: 1;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
     margin-right: 10px;
-    font-size: 16px;
+    -webkit-appearance: none; /* Prevent input styling issues in Safari */
 }
 
 button {
@@ -86,9 +84,15 @@ button {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 16px;
 }
 
 button:hover {
     background: #0056b3;
+}
+
+/* Fixing potential Safari issues with input and button appearance */
+input, button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
 }
