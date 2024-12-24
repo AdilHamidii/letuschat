@@ -49,7 +49,7 @@
                 const data = await response.json();
                 const link = `${window.location.origin}${data.link}?lang=${language}`;
 
-                document.getElementById('link').textContent = `Share this link: ${link}`;
+                document.getElementById('link').textContent = ` ${link}`;
                 document.getElementById('message').style.display = 'block'; // Show success message
                 document.getElementById('error').style.display = 'none';   // Hide error message
             } catch (error) {
