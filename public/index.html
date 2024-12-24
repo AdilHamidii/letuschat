@@ -19,8 +19,8 @@
     <p>Don't use abbreviations that might confuse the translation API.</p>
     <p>====> For any questions contact me on discord : adylfr </p>
 
-    <label for="Link">Share this link :</label>
     
+  
 
     <button id="generate">Generate Chat Link</button>
     <p id="link"></p>
@@ -36,7 +36,7 @@
     <script>
         document.getElementById('generate').addEventListener('click', async () => {
             try {
-                const language = 'English';
+                const language = 'en';
                 const response = await fetch('/generate');
                 
                 if (!response.ok) {
