@@ -8,7 +8,7 @@ const axios = require('axios');
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
-console.log("DeepL API Key: ", process.env.NOAPIKEYFORYOU);
+
 
 app.use(express.static('public'));
 
@@ -16,7 +16,7 @@ app.use(express.static('public'));
 const rooms = new Map();
 
 
-const DEEPL_API_KEY = process.env.NOAPIKEYFORYOU;
+const DEEPL_API_KEY = '3d6b2ec9-4fa6-4bdd-91c0-43e62050fea2:fx';
 
 
 app.get('/generate', (req, res) => {
@@ -24,9 +24,6 @@ app.get('/generate', (req, res) => {
     rooms.set(roomId, { users: [] });
     res.json({ link: `/chat/${roomId}` });
 });
-
-
-
 
 app.get('/chat/:roomId', (req, res) => {
     if (!rooms.has(req.params.roomId)) {
@@ -50,16 +47,16 @@ io.on('connection', (socket) => {
         }
     });
 
- 
+   
     socket.on('setLanguage', (language) => {
         const room = findRoomByUserId(socket.id);
         if (room) {
             const user = room.users.find(user => user.id === socket.id);
-            user.language = language; // Update language preference
+            user.language = language; 
         }
     });
 
-
+ 
     socket.on('message', async ({ roomId, message }) => {
         const room = rooms.get(roomId);
         if (room) {
@@ -71,7 +68,6 @@ io.on('connection', (socket) => {
             }
         }
     });
-
 
     socket.on('disconnect', () => {
         for (const [roomId, room] of rooms.entries()) {
@@ -96,7 +92,7 @@ function findRoomByUserId(userId) {
 
 async function translateMessage(text, targetLanguage) {
     if (!targetLanguage) {
-        return text; // No translation if no language is set
+        return text; 
     }
     try {
         const response = await axios.post(
@@ -106,17 +102,16 @@ async function translateMessage(text, targetLanguage) {
                 params: {
                     auth_key: DEEPL_API_KEY,
                     text: text,
-                    target_lang: targetLanguage.toUpperCase(), // DeepL uses language codes in uppercase
+                    target_lang: targetLanguage.toUpperCase(), 
                 }
             }
         );
         return response.data.translations[0].text;
     } catch (error) {
         console.error('Translation Error:', error);
-        return text; // Fallback to the original message in case of error
+        return text; 
     }
 }
-
 
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
