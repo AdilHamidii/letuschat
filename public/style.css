@@ -1,7 +1,7 @@
 * {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+    box-sizing: border-box; /* Ensures padding and borders are included in the element's dimensions */
 }
 
 body {
@@ -11,12 +11,11 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
-    height: 100%;
-    width: 100%;
-    overflow: hidden;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw; /* Ensures the body spans the full viewport width */
+    overflow: hidden; /* Prevents scrollbars */
     background-color: #808080;
-    -webkit-font-smoothing: antialiased; /* Ensure text rendering is smooth in Safari */
 }
 
 h1 {
@@ -24,24 +23,20 @@ h1 {
 }
 
 #chat-container {
+    width: 100vw; /* Takes the full width of the viewport */
+    height: 100vh; /* Takes the full height of the viewport */
     display: flex;
     flex-direction: column;
     border: 1px solid #ccc;
     border-radius: 5px;
     background: white;
-    width: 100%; /* Ensure it takes the full width of the viewport */
-    height: calc(100vh - 40px); /* Adjust to avoid issues with the iPhone's address bar */
-    max-height: 100%;
-    overflow: hidden; /* Prevent overflow in case of any unexpected content */
 }
 
 #chat {
     flex: 1;
-    padding: 10px;
+    padding: 20px 10px 10px; /* Adds padding at the top to push the first message down */
     overflow-y: auto;
     background-color: #f9f9f9;
-    flex-grow: 1;
-    -webkit-overflow-scrolling: touch; /* Ensure smooth scrolling in Safari */
 }
 
 .message {
@@ -74,7 +69,6 @@ h1 {
     border: 1px solid #ccc;
     border-radius: 5px;
     margin-right: 10px;
-    -webkit-appearance: none; /* Prevent input styling issues in Safari */
 }
 
 button {
@@ -88,11 +82,4 @@ button {
 
 button:hover {
     background: #0056b3;
-}
-
-/* Fixing potential Safari issues with input and button appearance */
-input, button {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
 }
