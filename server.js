@@ -1,5 +1,4 @@
-// Simple Multilingual Chat App
-// Backend: Node.js with Express.js and WebSocket
+
 
 const express = require('express');
 const http = require('http');
@@ -10,16 +9,16 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
 
-// Serve static files
+
 app.use(express.static('public'));
 
-// Map to store temporary chat rooms and users' language preferences
+
 const rooms = new Map();
 
-// DeepL API Key (You should sign up at DeepL and get your key)
-const DEEPL_API_KEY = '3d6b2ec9-4fa6-4bdd-91c0-43e62050fea2:fx';
 
-// Route to generate a chat link
+const DEEPL_API_KEY = process.env.NOAPIKEYFORYOU;
+
+
 app.get('/generate', (req, res) => {
     const roomId = Math.random().toString(36).substring(2, 10);
     rooms.set(roomId, { users: [] });
@@ -28,7 +27,7 @@ app.get('/generate', (req, res) => {
 
 
 
-// Route to serve the chat page
+
 app.get('/chat/:roomId', (req, res) => {
     if (!rooms.has(req.params.roomId)) {
         return res.status(404).send('Chat room not found');
@@ -36,14 +35,14 @@ app.get('/chat/:roomId', (req, res) => {
     res.sendFile(__dirname + '/public/chat.html');
 });
 
-// WebSocket connection
+
 io.on('connection', (socket) => {
-    let userLanguage = null; // to store user language temporarily
+    let userLanguage = null; 
     
     socket.on('join', ({ roomId }) => {
         const room = rooms.get(roomId);
         if (room && room.users.length < 2) {
-            room.users.push({ id: socket.id, language: null }); // Language will be set later
+            room.users.push({ id: socket.id, language: null }); 
             socket.join(roomId);
             socket.emit('joined', { success: true });
         } else {
@@ -51,7 +50,7 @@ io.on('connection', (socket) => {
         }
     });
 
-    // Set the user's language
+ 
     socket.on('setLanguage', (language) => {
         const room = findRoomByUserId(socket.id);
         if (room) {
@@ -60,7 +59,7 @@ io.on('connection', (socket) => {
         }
     });
 
-    // Send and translate messages
+
     socket.on('message', async ({ roomId, message }) => {
         const room = rooms.get(roomId);
         if (room) {
@@ -73,7 +72,7 @@ io.on('connection', (socket) => {
         }
     });
 
-    // Disconnect user and clean up room
+
     socket.on('disconnect', () => {
         for (const [roomId, room] of rooms.entries()) {
             room.users = room.users.filter(user => user.id !== socket.id);
@@ -84,7 +83,7 @@ io.on('connection', (socket) => {
     });
 });
 
-// Helper function to find the room based on user ID
+
 function findRoomByUserId(userId) {
     for (const room of rooms.values()) {
         if (room.users.some(user => user.id === userId)) {
@@ -94,7 +93,7 @@ function findRoomByUserId(userId) {
     return null;
 }
 
-// Function to translate messages using DeepL API
+
 async function translateMessage(text, targetLanguage) {
     if (!targetLanguage) {
         return text; // No translation if no language is set
@@ -118,6 +117,6 @@ async function translateMessage(text, targetLanguage) {
     }
 }
 
-// Start the server
+
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
