@@ -6,9 +6,9 @@
     <title>Chat</title>
     <link rel="stylesheet" href="/style.css">
     <style>
-        /* Modal styles */
+        
         #language-modal {
-            display: none; /* Hidden by default */
+            display: none; 
             position: fixed;
             top: 0;
             left: 0;
@@ -81,18 +81,21 @@
         const socket = io();
         const params = new URLSearchParams(window.location.search);
         const roomId = window.location.pathname.split('/').pop();
-        
-        // Show the language modal
-        document.getElementById('language-modal').style.display = 'flex';
+ 
+document.getElementById('language-modal').style.display = 'flex';
 
-        // Handle language selection
-        document.getElementById('modal-button').addEventListener('click', () => {
-            const language = document.getElementById('language').value;
-            socket.emit('join', { roomId, language });
 
-            // Close the modal after selecting a language
-            document.getElementById('language-modal').style.display = 'none';
-        });
+document.getElementById('modal-button').addEventListener('click', () => {
+    const language = document.getElementById('language').value;
+
+
+    socket.emit('join', { roomId });
+    socket.emit('setLanguage', language);
+
+
+    document.getElementById('language-modal').style.display = 'none';
+});
+
 
         socket.on('joined', (data) => {
             if (!data.success) {
@@ -104,7 +107,7 @@
         socket.on('message', ({ message }) => {
             const chatDiv = document.getElementById('chat');
             const msgDiv = document.createElement('div');
-            msgDiv.textContent = ` - ${message}`; // Prefix for incoming messages
+            msgDiv.textContent = ` - ${message}`; 
             msgDiv.classList.add('message', 'incoming');
             chatDiv.appendChild(msgDiv);
             chatDiv.scrollTop = chatDiv.scrollHeight;
@@ -115,7 +118,7 @@
             if (message) {
                 const chatDiv = document.getElementById('chat');
                 const msgDiv = document.createElement('div');
-                msgDiv.textContent = `Me : ${message}`; // Prefix for outgoing messages
+                msgDiv.textContent = `Me : ${message}`; 
                 msgDiv.classList.add('message', 'outgoing');
                 chatDiv.appendChild(msgDiv);
                 chatDiv.scrollTop = chatDiv.scrollHeight;
@@ -126,7 +129,7 @@
 
         document.getElementById('send').addEventListener('click', sendMessage);
 
-        // Add event listener for the Enter key
+ 
         document.getElementById('message').addEventListener('keydown', (event) => {
             if (event.key === 'Enter') {
                 sendMessage();
