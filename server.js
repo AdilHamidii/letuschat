@@ -16,7 +16,7 @@ app.use(express.static('public'));
 const rooms = new Map();
 
 
-const DEEPL_API_KEY = '3d6b2ec9-4fa6-4bdd-91c0-43e62050fea2:fx';
+const DEEPL_API_KEY = process.env.NOAPIKEYFORYOU;
 
 
 app.get('/generate', (req, res) => {
