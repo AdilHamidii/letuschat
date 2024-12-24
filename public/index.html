@@ -36,7 +36,7 @@
     <script>
         document.getElementById('generate').addEventListener('click', async () => {
             try {
-                const language = English;
+                const language = 'English';
                 const response = await fetch('/generate');
                 
                 if (!response.ok) {
