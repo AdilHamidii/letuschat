@@ -22,21 +22,21 @@ h1 {
 
 #chat-container {
     width: 100vw;
-    height: 100%; /* Make sure the container takes full height */
+    height: 100%; /* Take full height of the screen */
     display: flex;
     flex-direction: column;
     border: 1px solid #ccc;
     border-radius: 5px;
     background: white;
-    position: relative; /* Ensures the container can handle position of input */
+    position: relative; /* Make sure chat container is positioned correctly */
 }
 
 #chat {
-    flex-grow: 1; /* This makes the chat area take up available space */
+    flex-grow: 1; /* Take up remaining space */
     padding: 10px;
-    overflow-y: auto;
+    overflow-y: auto; /* Make the chat area scrollable */
     background-color: #f9f9f9;
-    margin-bottom: 60px; /* Give space for the input at the bottom */
+    padding-bottom: 70px; /* Adjust space for the input container */
 }
 
 .message {
@@ -57,17 +57,17 @@ h1 {
 }
 
 #input-container {
-    position: fixed; /* Ensure it stays fixed at the bottom */
+    position: fixed; /* Keep it at the bottom */
     bottom: 0;
     left: 0;
     width: 100%;
     padding: 10px;
     background: #f4f4f4;
     display: flex;
-    align-items: center; /* Align input and button vertically */
+    align-items: center;
     justify-content: space-between;
-    box-sizing: border-box; /* Prevents any overflow */
-    z-index: 10; /* Ensures it stays on top */
+    box-sizing: border-box;
+    z-index: 10; /* Ensure input container stays above chat */
 }
 
 #message {
