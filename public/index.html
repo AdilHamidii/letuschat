@@ -19,11 +19,8 @@
     <p>Don't use abbreviations that might confuse the translation API.</p>
     <p>====> For any questions contact me on discord : adylfr </p>
 
-    <label for="language">Select Your Language:</label>
-    <select id="language">
-        <option value="en">English</option>
-        <!-- Add more languages as needed -->
-    </select>
+    <label for="Link">Share this link :</label>
+    
 
     <button id="generate">Generate Chat Link</button>
     <p id="link"></p>
@@ -39,7 +36,7 @@
     <script>
         document.getElementById('generate').addEventListener('click', async () => {
             try {
-                const language = document.getElementById('language').value;
+                const language = English;
                 const response = await fetch('/generate');
                 
                 if (!response.ok) {
